@@ -18,9 +18,32 @@
       "label": "vite: build"
     },
     {
+      "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}/src/public/"
+      },
+      "command": "npx vite preview --host",
+      "group": "build",
+      "label": "vite: preview"
+    },
+    {
+      "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}/src/public/"
+      },
+      "command": "npx vite build --emptyOutDir --watch",
+      "group": "build",
+      "label": "vite: watch"
+    },
+    {
       "dependsOn": ["tsc: build", "vite: build"],
       "group": "build",
       "label": "Build App"
+    },
+    {
+      "dependsOn": ["vite: watch", "vite: preview"],
+      "group": "build",
+      "label": "Preview App"
     }
   ]
 }
