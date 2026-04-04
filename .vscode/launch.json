@@ -9,7 +9,8 @@
       "program": "${workspaceFolder}/dist/main.js",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
-      "type": "node"
+      "type": "node",
+      "preLaunchTask": "Build App"
     },
     {
       "type": "chrome",
