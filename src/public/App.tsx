@@ -1,24 +1,28 @@
 import React from "react";
+import { FileEntry, FileRep } from "./component/FileEntry";
 
 function FileList() {
+  // temporary value for testing
+  const fileReps: FileRep[] = [
+    {
+      name: "File Name 1",
+      source: "",
+    },
+    {
+      name: "File Name 2",
+      source: "",
+    },
+  ];
+
+  const fileEntries = fileReps.map((fileRep) => (
+    <FileEntry fileRep={fileRep} />
+  ));
+
   return (
     <div>
       <h2>Results</h2>
-      <div>
-        <FileEntry name="File Name 1" />
-      </div>
+      <div className="file-entries">{fileEntries}</div>
     </div>
-  );
-}
-
-function FileEntry({ name }: { name: string }) {
-  return (
-    <article className="file-entry">
-      <h3 className="text-2">{name}</h3>
-      <button type="button" className="button-2">
-        Download
-      </button>
-    </article>
   );
 }
 

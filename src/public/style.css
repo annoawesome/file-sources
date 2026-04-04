@@ -46,6 +46,12 @@ html {
   color: var(--c0-dark-gray);
 }
 
+.file-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
 .file-entry {
   border: 1px solid var(--c0-medium-light-gray);
   border-radius: 16px;
