@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FileEntry, FileRep } from "./component/FileEntry";
 
-function FileList() {
+function FileList({ searchQuery }: { searchQuery: string }) {
   const [fileReps, setFileReps] = useState<FileRep[]>([]);
-  const searchQuery = "";
 
   const fileEntries = fileReps.map((fileRep, index) => (
     <FileEntry key={index} fileRep={fileRep} />
@@ -27,7 +26,8 @@ function FileList() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => console.log("Retrieved results"));
   }, [searchQuery]);
 
   return (
@@ -38,7 +38,11 @@ function FileList() {
   );
 }
 
-function SearchBar() {
+function SearchBar({
+  setSearchQuery,
+}: {
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
     <input
       className="search-1"
@@ -46,15 +50,25 @@ function SearchBar() {
       name="a"
       id=""
       placeholder="Big Buck Bunny"
+      onKeyUp={(ev) => {
+        if (ev.key === "Enter") {
+          setSearchQuery(ev.currentTarget.innerText);
+          ev.currentTarget.blur();
+
+          console.log("Sending search query");
+        }
+      }}
     />
   );
 }
 
 export default function App() {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   return (
     <div className="flex-center">
-      <SearchBar />
-      <FileList />
+      <SearchBar setSearchQuery={setSearchQuery} />
+      <FileList searchQuery={searchQuery} />
     </div>
   );
 }
