@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FileEntry, FileRep } from "./component/FileEntry";
 
 function FileList({ searchQuery }: { searchQuery: string }) {
@@ -9,12 +9,16 @@ function FileList({ searchQuery }: { searchQuery: string }) {
   ));
 
   useEffect(() => {
-    const req = new Request("/api/v1/files/search", {
-      method: "GET",
-    });
+    const req = new Request(
+      encodeURI(`/api/v1/files/search?query=${searchQuery}`),
+      {
+        method: "GET",
+      },
+    );
 
     fetch(req)
       .then(async (res) => {
+        console.log(res);
         if (res.ok) {
           return res.json();
         } else {
@@ -43,16 +47,20 @@ function SearchBar({
 }: {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
+  // Probably not needed
+  const queryRef: React.RefObject<HTMLInputElement | null> = useRef(null);
+
   return (
     <input
+      ref={queryRef}
       className="search-1"
       type="search"
       name="a"
       id=""
       placeholder="Big Buck Bunny"
       onKeyUp={(ev) => {
-        if (ev.key === "Enter") {
-          setSearchQuery(ev.currentTarget.innerText);
+        if (ev.key === "Enter" && queryRef.current) {
+          setSearchQuery(queryRef.current.value);
           ev.currentTarget.blur();
 
           console.log("Sending search query");

@@ -1,19 +1,17 @@
 import express from "express";
+import { getFiles, searchForFiles } from "../dao/searchForFiles.js";
 
 export const filesRouter = express.Router();
 
-filesRouter.get("/search", (req, res) => {
-  // Temporary, until proper db is implemented
-  const mockFileReps = [
-    {
-      name: "Big Buck Bunny",
-      source: "",
-    },
-    {
-      name: "A Bunny's Life",
-      source: "",
-    },
-  ];
+filesRouter.get("/search", async (req, res) => {
+  const searchQuery = req.query.query;
+  let fileReps;
 
-  res.status(200).send(JSON.stringify(mockFileReps));
+  if (typeof searchQuery === "string" && searchQuery.length > 0) {
+    fileReps = await searchForFiles(searchQuery);
+  } else {
+    fileReps = await getFiles();
+  }
+
+  res.status(200).send(JSON.stringify(fileReps));
 });
