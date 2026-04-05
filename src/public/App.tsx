@@ -10,7 +10,9 @@ function FileList({ searchQuery }: { searchQuery: string }) {
 
   useEffect(() => {
     const req = new Request(
-      encodeURI(`/api/v1/files/search?query=${searchQuery}`),
+      `/api/v1/files/search?${new URLSearchParams({
+        query: searchQuery,
+      })}`,
       {
         method: "GET",
       },
@@ -18,7 +20,6 @@ function FileList({ searchQuery }: { searchQuery: string }) {
 
     fetch(req)
       .then(async (res) => {
-        console.log(res);
         if (res.ok) {
           return res.json();
         } else {
