@@ -1,22 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FileEntry, FileRep } from "./component/FileEntry";
 
 function FileList() {
-  // temporary value for testing
-  const fileReps: FileRep[] = [
-    {
-      name: "File Name 1",
-      source: "",
-    },
-    {
-      name: "File Name 2",
-      source: "",
-    },
-  ];
+  const [fileReps, setFileReps] = useState<FileRep[]>([]);
+  const searchQuery = "";
 
-  const fileEntries = fileReps.map((fileRep) => (
-    <FileEntry fileRep={fileRep} />
+  const fileEntries = fileReps.map((fileRep, index) => (
+    <FileEntry key={index} fileRep={fileRep} />
   ));
+
+  useEffect(() => {
+    const req = new Request("/api/v1/files/search", {
+      method: "GET",
+    });
+
+    fetch(req)
+      .then(async (res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(`Error ${res.status}: ${res.statusText}`);
+        }
+      })
+      .then((body: FileRep[]) => {
+        setFileReps(body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [searchQuery]);
 
   return (
     <div>
