@@ -13,10 +13,10 @@ usersRouter.post("/register", async (req, res) => {
   const body: UserRegistrationBody = req.body;
   const hash = await bcrypt.hash(body.password, 10);
 
-  registerUser(body.username, hash);
+  const success = await registerUser(body.username, hash);
 
-  // TODO: return 409 Conflict if username is already taken
-  res.sendStatus(200);
+  // Return 409 Conflict if username is presumably taken
+  res.sendStatus(success ? 200 : 409);
 });
 
 usersRouter.post("/login", async (req, res) => {

@@ -7,10 +7,18 @@ export type HashAndIv = {
 };
 
 export async function registerUser(username: string, hash: string) {
-  return await sql`
-    INSERT INTO users (username, hash)
-    VALUES (${username}, ${hash});
-  `;
+  try {
+    await sql`
+      INSERT INTO users (username, hash)
+      VALUES (${username}, ${hash});
+    `;
+
+    return true;
+  } catch {
+    // Unknown reason why it failed. Maybe username is already taken.
+    // Just return false for now
+    return false;
+  }
 }
 
 export async function getHashOfUser(
