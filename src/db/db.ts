@@ -14,10 +14,9 @@ export async function generateTables() {
   // user table
   await sql`
     CREATE TABLE IF NOT EXISTS users (
-      username varchar(255) PRIMARY KEY
+      username varchar(255) PRIMARY KEY,
       hash varchar(255)
-      iv varbinary(16)
-    )
+    );
   `;
 }
 

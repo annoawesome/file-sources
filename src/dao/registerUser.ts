@@ -4,30 +4,26 @@ const sql = postgres("postgres://postgres:postgres@db:5432/postgres");
 
 export type HashAndIv = {
   hash: string;
-  iv: Buffer;
 };
 
-export async function registerUser(username: string, hash: string, iv: Buffer) {
-  const _ = await sql`
-    INSERT INTO users (username, hash, iv)
-    VALUES (${username}, ${hash}, ${iv});
+export async function registerUser(username: string, hash: string) {
+  return await sql`
+    INSERT INTO users (username, hash)
+    VALUES (${username}, ${hash});
   `;
 }
 
-export async function getHashAndIvOfUser(
+export async function getHashOfUser(
   username: string,
-): Promise<HashAndIv | undefined> {
+): Promise<string | undefined> {
   const users = await sql`
-    SELECT username, hash, iv FROM users
+    SELECT username, hash FROM users
     WHERE
       username = ${username};`;
 
   if (users.length == 1) {
     const user = users[0];
 
-    return {
-      hash: user.hash,
-      iv: user.iv,
-    };
+    return user.hash;
   }
 }

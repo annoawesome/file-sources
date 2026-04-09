@@ -8,6 +8,7 @@ const port = 8080;
 // TODO: Possible race condition?
 generateTables();
 
+app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/api/v1/", apiRouter);
