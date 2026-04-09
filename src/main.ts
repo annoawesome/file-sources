@@ -1,4 +1,5 @@
 import express from "express";
+import "dotenv/config";
 import { apiRouter } from "./routers/apiRouter.js";
 import { generateTables } from "./db/db.js";
 
