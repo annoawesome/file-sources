@@ -71,7 +71,7 @@ function SearchBar({
   );
 }
 
-export default function FileSearch() {
+export default function FileSearch(username: string) {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   return (

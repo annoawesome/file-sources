@@ -43,7 +43,10 @@ usersRouter.post("/login", async (req, res) => {
         sameSite: "lax",
         expires: new Date(Date.now() + 3600000),
       })
-      .sendStatus(200);
+      .status(200)
+      .json({
+        username: body.username,
+      });
   } else {
     res.sendStatus(400);
   }
