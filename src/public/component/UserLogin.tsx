@@ -49,6 +49,15 @@ function loginUser(
     });
 }
 
+function onClick(
+  event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  setLocation: React.Dispatch<React.SetStateAction<string>>,
+  location: string,
+) {
+  event.preventDefault();
+  setLocation(location);
+}
+
 export default function UserLogin(
   setLocation: React.Dispatch<React.SetStateAction<string>>,
   setUsername: React.Dispatch<React.SetStateAction<string>>,
@@ -64,6 +73,17 @@ export default function UserLogin(
         <input type="text" name="username" id="" />
         <label htmlFor="password">Password</label>
         <input type="password" name="password" id="" />
+        <p>
+          Don't have an account?{" "}
+          <a
+            href=""
+            onClick={(event) =>
+              onClick(event, setLocation, "user-registration")
+            }
+          >
+            Register here
+          </a>
+        </p>
         <button type="submit" className="button-1">
           Register
         </button>

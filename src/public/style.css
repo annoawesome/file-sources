@@ -16,6 +16,14 @@ body {
   margin: 0;
 }
 
+a {
+  color: blue;
+}
+
+a:visited {
+  color: purple;
+}
+
 .flex-center {
   display: flex;
   flex-direction: column;
