@@ -12,6 +12,11 @@ type UserRegistrationBody = {
 
 usersRouter.post("/register", async (req, res) => {
   const body: UserRegistrationBody = req.body;
+
+  if (!body || !body.password || !body.username) {
+    res.sendStatus(400);
+  }
+
   const hash = await bcrypt.hash(body.password, 10);
 
   const success = await registerUser(body.username, hash);

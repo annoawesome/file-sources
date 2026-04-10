@@ -1,10 +1,43 @@
 import React from "react";
 
+function serializeFormDataToJson(formData: FormData) {
+  const formObject: Record<string, unknown> = {};
+
+  formData.forEach((value, key) => {
+    formObject[key as string] = value;
+  });
+
+  return formObject;
+}
+
+function registerUser(e: React.SubmitEvent<HTMLFormElement>) {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+
+  const req = new Request("/api/v1/users/register", {
+    method: "POST",
+    headers: new Headers([["Content-Type", "application/json"]]),
+    body: JSON.stringify(serializeFormDataToJson(formData)),
+  });
+
+  fetch(req).then((res) => {
+    if (!res.ok) {
+      alert(
+        `"Registration failed with status ${res.status}. Username already taken.`,
+      );
+      return;
+    } else {
+      console.log("Registration success");
+    }
+  });
+}
+
 export default function UserRegistration() {
   return (
     <div className="flex-center user-register-flex-center">
       <h2 className="text-center">Register</h2>
-      <form action="" className="form-1">
+      <form onSubmit={registerUser} className="form-1">
         <label htmlFor="username">Username</label>
         <input type="text" name="username" id="" />
         <label htmlFor="password">Password</label>
