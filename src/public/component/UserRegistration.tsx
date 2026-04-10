@@ -10,7 +10,10 @@ function serializeFormDataToJson(formData: FormData) {
   return formObject;
 }
 
-function registerUser(e: React.SubmitEvent<HTMLFormElement>) {
+function registerUser(
+  e: React.SubmitEvent<HTMLFormElement>,
+  setLocation: React.Dispatch<React.SetStateAction<string>>,
+) {
   e.preventDefault();
 
   const formData = new FormData(e.target);
@@ -29,15 +32,21 @@ function registerUser(e: React.SubmitEvent<HTMLFormElement>) {
       return;
     } else {
       console.log("Registration success");
+      setLocation("user-login");
     }
   });
 }
 
-export default function UserRegistration() {
+export default function UserRegistration(
+  setLocation: React.Dispatch<React.SetStateAction<string>>,
+) {
   return (
     <div className="flex-center user-register-flex-center">
       <h2 className="text-center">Register</h2>
-      <form onSubmit={registerUser} className="form-1">
+      <form
+        onSubmit={(event) => registerUser(event, setLocation)}
+        className="form-1"
+      >
         <label htmlFor="username">Username</label>
         <input type="text" name="username" id="" />
         <label htmlFor="password">Password</label>
