@@ -17,11 +17,17 @@ function registerUser(
   e.preventDefault();
 
   const formData = new FormData(e.target);
+  const body = serializeFormDataToJson(formData);
+
+  if (body.password !== body.passwordReenter) {
+    alert("Passwords don't match!");
+    return;
+  }
 
   const req = new Request("/api/v1/users/register", {
     method: "POST",
     headers: new Headers([["Content-Type", "application/json"]]),
-    body: JSON.stringify(serializeFormDataToJson(formData)),
+    body: JSON.stringify(body),
   });
 
   fetch(req).then((res) => {
@@ -51,6 +57,8 @@ export default function UserRegistration(
         <input type="text" name="username" id="" />
         <label htmlFor="password">Password</label>
         <input type="password" name="password" id="" />
+        <label htmlFor="passwordReenter">Re-enter Password</label>
+        <input type="password" name="password-reenter" id="" />
         <button type="submit" className="button-1">
           Register
         </button>
