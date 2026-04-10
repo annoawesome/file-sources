@@ -12,6 +12,10 @@ html {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 .flex-center {
   display: flex;
   flex-direction: column;
@@ -20,6 +24,12 @@ html {
 
 .text-center {
   text-align: center;
+}
+
+.flex-left {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
 }
 
 .search-1 {
@@ -59,6 +69,17 @@ html {
   background-color: var(--c0-medium-light-gray);
 }
 
+.button-3 {
+  border: 0;
+  background-color: transparent;
+  margin: 4px;
+  border-radius: 4px;
+}
+
+.button-3:hover {
+  background-color: var(--c0-very-light-gray);
+}
+
 .text-2 {
   color: var(--c0-dark-gray);
 }
@@ -71,6 +92,11 @@ html {
 
 .form-1 > input {
   margin-bottom: 32px;
+}
+
+/* Topbar */
+.topbar > * {
+  margin: 16px 64px;
 }
 
 /* Center content in file search page */

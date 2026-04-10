@@ -15,7 +15,7 @@ function ResolvedPage({
   setUsername: React.Dispatch<React.SetStateAction<string>>;
 }) {
   if (location === "files-search") {
-    return FileSearch(username);
+    return FileSearch(username, setLocation);
   } else if (location === "user-registration") {
     return UserRegistration(setLocation);
   } else if (location === "user-login") {
@@ -26,7 +26,7 @@ function ResolvedPage({
 }
 
 export default function App() {
-  const [pageLocation, setPageLocation] = useState("user-login");
+  const [pageLocation, setPageLocation] = useState("files-search");
   const [username, setUsername] = useState<string>("");
 
   return (

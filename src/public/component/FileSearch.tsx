@@ -71,13 +71,39 @@ function SearchBar({
   );
 }
 
-export default function FileSearch(username: string) {
+function Topbar({
+  username,
+  setLocation,
+}: {
+  username: string;
+  setLocation: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  return (
+    <div className="topbar flex-left">
+      {username.length > 0 ? (
+        <p>Welcome, {username || "example"}</p>
+      ) : (
+        <button className="button-3" onClick={() => setLocation("user-login")}>
+          Login
+        </button>
+      )}
+    </div>
+  );
+}
+
+export default function FileSearch(
+  username: string,
+  setLocation: React.Dispatch<React.SetStateAction<string>>,
+) {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   return (
-    <div className="flex-center file-search-flex-center">
-      <SearchBar setSearchQuery={setSearchQuery} />
-      <FileList searchQuery={searchQuery} />
-    </div>
+    <>
+      <Topbar username={username} setLocation={setLocation} />
+      <div className="flex-center file-search-flex-center">
+        <SearchBar setSearchQuery={setSearchQuery} />
+        <FileList searchQuery={searchQuery} />
+      </div>
+    </>
   );
 }
