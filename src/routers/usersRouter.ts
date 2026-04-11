@@ -51,3 +51,22 @@ usersRouter.post("/login", async (req, res) => {
     res.sendStatus(400);
   }
 });
+
+// Endpoint for getting user data
+usersRouter.get("/current-user", async (req, res) => {
+  const token: string | undefined = req.cookies.session_token;
+
+  if (typeof token === "string") {
+    // Not used for authentication, so it should be okay to not actually check it
+    try {
+      const decoded = jwt.decode(token);
+      if (decoded && typeof decoded === "object") {
+        res.status(200).send(decoded);
+      }
+    } catch {
+      res.sendStatus(200);
+    }
+  } else {
+    res.sendStatus(200);
+  }
+});
