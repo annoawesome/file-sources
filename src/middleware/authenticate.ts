@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-type AuthPayload = {
+export type AuthPayload = {
   authPayload: jwt.JwtPayload;
 };
 
