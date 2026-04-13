@@ -7,6 +7,7 @@ export async function generateTables() {
     CREATE TABLE IF NOT EXISTS files (
       id varchar(255) PRIMARY KEY,
       name varchar(255),
+      author varchar(255),
       source varchar(255)
     );
   `;
